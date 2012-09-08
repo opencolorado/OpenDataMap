@@ -240,9 +240,9 @@ def reproject_shapefile(package_name, shapefile):
     
     # create a new data source and layer
     if os.path.exists(projected_shapefile):
-        driver.DeleteDataSource(projected_shapefile)
+        driver.DeleteDataSource(encode_path(projected_shapefile))
       
-    dest_shapefile = driver.CreateDataSource(projected_shapefile)
+    dest_shapefile = driver.CreateDataSource(encode_path(projected_shapefile))
     
     if dest_shapefile is None:
         print 'Could not create file'
@@ -323,7 +323,7 @@ def rasterize_shapefile(package_name, shapefile):
     output = os.path.join(datasets_folder, package_name, 'map.tif')
     output_png = os.path.join(datasets_folder, package_name, 'map.png')
 
-    target_ds = gdal.GetDriverByName('GTiff').Create(output, x_res, y_res, 3, gdal.GDT_Byte)
+    target_ds = gdal.GetDriverByName('GTiff').Create(encode_path(output), x_res, y_res, 3, gdal.GDT_Byte)
     
     target_ds.SetGeoTransform((
             x_min, resolution, 0,
@@ -340,7 +340,7 @@ def rasterize_shapefile(package_name, shapefile):
     if (geom_type == ogr.wkbPolygon):
         
         # Load the shapefile into memory for modification
-        projected_shapefile_memory = ogr.GetDriverByName("Memory").CopyDataSource(projected_shapefile, "")
+        projected_shapefile_memory = ogr.GetDriverByName("Memory").CopyDataSource(encode_path(projected_shapefile), "")
         layer_memory = projected_shapefile_memory.GetLayer()
         
         # TODO: For polygons, use the polygon size to determine the burn value
