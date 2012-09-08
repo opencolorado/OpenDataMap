@@ -156,7 +156,7 @@ def process_package_resource(package, resource):
             # Delete the download folder
             # Delete the source shapefile
             try:
-                shutil.rmtree(os.path.join(package_name,download_folder))
+                shutil.rmtree(os.path.join(datasets_folder,package_name,download_folder))
             except:
                 print "Unable to delete the downloaded shapefile.  Skipping..."
                 
@@ -224,9 +224,7 @@ def reproject_shapefile(package_name, shapefile):
         
     driver = ogr.GetDriverByName('ESRI Shapefile')
      
-    print shapefile
-    
-    src_shapefile = ogr.Open(shapefile)
+    src_shapefile = ogr.Open(encode_path(shapefile))
     
     src_layer = src_shapefile.GetLayer()
     
@@ -311,7 +309,7 @@ def rasterize_shapefile(package_name, shapefile):
     
     print "Rasterizing... "
                  
-    projected_shapefile = ogr.Open(shapefile)
+    projected_shapefile = ogr.Open(encode_path(shapefile))
     
     layer = projected_shapefile.GetLayer()
         
@@ -560,6 +558,10 @@ def generate_world_file():
     world_file.write("%0.8f\n" % x_min) #X coordinate in world coordinates of the center of the top-left pixel
     world_file.write("%0.8f\n" % y_max) #Y coordinate in world coordinates of the center of the top-left pixel
     world_file.close()
+
+def encode_path(path):
+    filesystemencoding = sys.getfilesystemencoding()
+    return path.encode(filesystemencoding)
     
 #Execute main function    
 if __name__ == '__main__':
