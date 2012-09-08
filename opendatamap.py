@@ -224,6 +224,8 @@ def reproject_shapefile(package_name, shapefile):
         
     driver = ogr.GetDriverByName('ESRI Shapefile')
      
+    print shapefile
+    
     src_shapefile = ogr.Open(shapefile)
     
     src_layer = src_shapefile.GetLayer()
