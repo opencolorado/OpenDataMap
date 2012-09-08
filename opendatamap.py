@@ -228,6 +228,8 @@ def reproject_shapefile(package_name, shapefile):
     
     src_layer = src_shapefile.GetLayer()
     
+    src_geom_type = src_layer.GetGeomType()
+    
     # Get the input SpatialReference
     src_sr = src_layer.GetSpatialRef()
 
@@ -248,7 +250,7 @@ def reproject_shapefile(package_name, shapefile):
         print 'Could not create file'
         sys.exit(1)
         
-    dest_layer = dest_shapefile.CreateLayer('output', geom_type=src_layer.GetGeomType())
+    dest_layer = dest_shapefile.CreateLayer('output', geom_type=src_geom_type)
     
     # get the layer definition for the output shapefile
     dest_layer_defn = dest_layer.GetLayerDefn()
