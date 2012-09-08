@@ -228,7 +228,7 @@ def reproject_shapefile(package_name, shapefile):
     
     src_layer = src_shapefile.GetLayer()
     
-    src_geom_type = src_layer.GetGeomType()
+    src_geom_type = src_layer.GetLayerDefn().GetGeomType()
     
     # Get the input SpatialReference
     src_sr = src_layer.GetSpatialRef()
