@@ -17,6 +17,7 @@ local.properties
 *.pgw
 ~$*
 !scheme/*.png
+!viewer/*
 
 # External tool builders
 .externalToolBuilders/
