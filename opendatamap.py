@@ -338,11 +338,11 @@ def rasterize_shapefile(package_name, shapefile):
         target_ds.SetProjection(srs.ExportToWkt())
         
     # Set the burn value based on the geometry type
-    geom_type=layer.GetGeomType()
+    geom_type=layer.GetLayerDefn().GetGeomType()
     if (geom_type == ogr.wkbPolygon):
         
         # Load the shapefile into memory for modification
-        projected_shapefile_memory = ogr.GetDriverByName("Memory").CopyDataSource(encode_path(projected_shapefile), "")
+        projected_shapefile_memory = ogr.GetDriverByName("Memory").CopyDataSource(projected_shapefile, "")
         layer_memory = projected_shapefile_memory.GetLayer()
         
         # TODO: For polygons, use the polygon size to determine the burn value
