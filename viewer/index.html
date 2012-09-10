@@ -1,0 +1,79 @@
+<html>
+<head>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.css" />
+	 <!--[if lte IE 8]>
+	     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.4/leaflet.ie.css" />
+	 <![endif]-->
+	 
+	 <script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>
+	 <style>
+	 	#map 
+	 	{ 
+	 		height: 550px; 
+	 		border:1px solid #bbbbbb;
+	 		/*box-shadow: 0px 1px 5px 0px #4A4A4A;*/
+	 	}
+	 	
+	 	#wrapper
+	 	{
+	 		border:1px solid #999999;
+	 		padding:8px;
+	 		border-radius: 5px;
+	 		position: relative;
+	 	
+	 	}
+	 	
+	 	#logo
+	 	{
+	 		z-index: 1;
+	 		position: absolute;
+	 		bottom: 13px;
+	 		left: 13px;
+	 		width: 120px;
+	 		height: 20px;
+	 		background:url(opencolorado.png) no-repeat;
+	 	}
+	 </style>
+	 
+	 
+</head>
+	
+<body>
+	<div id="wrapper">
+	<div id="map"></div>
+	<div id=logo></div>
+	</div>
+	
+	<script>
+	 	var map = L.map('map').setView([38.95, -105.72], 7);
+	 	
+	 	var sample = 'http://{s}.tile.cloudmade.com/API-key/997/256/{z}/{x}/{y}.png'
+	 	var mapquestOsmLayer = 'http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg'
+	 	var openDataDensityLayer = "../map_colorized/{z}/{x}/{y}.png"
+	 	
+	 	var maxZoom = 12;
+	 	
+	 	var baseMapUrl = 'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}';
+        L.tileLayer(baseMapUrl, 
+        { 
+        		maxZoom: maxZoom
+        }).addTo(map);
+		
+		L.tileLayer(openDataDensityLayer, 
+	 	{
+		    attribution: 'Open data density generated from <a href="http://data.opencolorado.org">OpenColorado datasets</a>',
+		    maxZoom: maxZoom,
+		    tms: true,
+		    opacity: 0.75
+		}).addTo(map);
+	
+		var referenceMapUrl = 'http://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}';
+        L.tileLayer(referenceMapUrl, 
+        { 
+        		maxZoom: maxZoom, 
+        		attribution: 'Base map: &copy; <a href="http://www.arcgis.com/home/item.html?id=8b3b470883a744aeb60e5fff0a319ce7">Esri</a>'
+        }).addTo(map);
+			 			
+	 </script>
+</body>
+</html>
